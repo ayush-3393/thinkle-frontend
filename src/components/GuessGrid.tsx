@@ -75,12 +75,24 @@ const GuessGrid: React.FC<GuessGridProps> = ({
         </div>
       </div>
 
-      {currentAiResponse && (
-        <div className="ai-response-panel">
-          <h4 className="ai-response-title">AI Feedback</h4>
+      {/* Always show AI response panel */}
+      <div
+        className={`ai-response-panel ${!currentAiResponse ? "waiting" : ""}`}
+      >
+        <h4 className="ai-response-title">AI Feedback</h4>
+        {currentAiResponse ? (
           <p className="ai-response-text">{currentAiResponse}</p>
-        </div>
-      )}
+        ) : (
+          <div className="ai-waiting">
+            <div className="waiting-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <p className="waiting-text">Waiting for your guess...</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
