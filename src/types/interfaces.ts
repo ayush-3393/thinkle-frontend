@@ -44,6 +44,8 @@ export interface GuessResponse {
   correctPositions: number[];
   missedPositions: number[];
   aiResponse: string;
+  remainingLives: number;
+  gameStatus: GameStatus;
 }
 
 export interface GuessRequest {
@@ -58,6 +60,7 @@ export interface GetHintRequest {
 
 export interface GetHintResponse {
   hintText: string;
+  remainingLives: number;
 }
 
 export interface HintType {

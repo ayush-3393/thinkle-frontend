@@ -79,3 +79,26 @@
   margin-left: 0.5rem;
   color: #dc2626;
 }
+
+.game-over-message {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.game-over-message.won {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border: 2px solid #22c55e;
+}
+
+.game-over-message.lost {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 2px solid #ef4444;
+}

@@ -79,7 +79,10 @@ export class ApiService {
     }
   }
 
-  static async getHint(userId: number, hintType: string): Promise<string> {
+  static async getHint(
+    userId: number,
+    hintType: string
+  ): Promise<GetHintResponse> {
     try {
       const request: GetHintRequest = { userId, hintType };
 
@@ -100,7 +103,7 @@ export class ApiService {
         throw new Error(result.message || "Failed to get hint");
       }
 
-      return result.data.hintText;
+      return result.data;
 
       // Mock implementation for demo
       // await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API delay
@@ -154,10 +157,8 @@ export class ApiService {
     }
   }
 
-  static async submitGuess(
-    userId: number,
-    guessedWord: string
-  ): Promise<CreateGameSessionResponse> {
+  static async submitGuess(userId: number, guessedWord: string): Promise<any> {
+    // Changed to any to see what we actually get
     try {
       const request: GuessRequest = { userId, guessedWord };
 
@@ -171,13 +172,13 @@ export class ApiService {
         throw new Error("Failed to submit guess");
       }
 
-      const result: BaseResponse<CreateGameSessionResponse> =
-        await response.json();
+      const result: BaseResponse<any> = await response.json();
 
       if (result.statusCode !== 0) {
         throw new Error(result.message || "Failed to submit guess");
       }
 
+      console.log("Raw API response for submitGuess:", result.data);
       return result.data;
     } catch (error) {
       console.error("Error submitting guess:", error);

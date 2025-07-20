@@ -1,0 +1,132 @@
+/* components/GuessGrid.css */
+.guess-grid-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: start;
+}
+
+.guess-grid {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.grid-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.no-guesses {
+  color: #6b7280;
+  text-align: center;
+  padding: 2rem 0;
+  font-style: italic;
+}
+
+.guesses-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.guess-row {
+  display: flex;
+  justify-content: center;
+}
+
+.letter-tiles {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.letter-tile {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.letter-tile.correct {
+  background-color: #10b981; /* Green for correct position */
+}
+
+.letter-tile.wrong-position {
+  background-color: #f59e0b; /* Yellow for wrong position */
+}
+
+.letter-tile.not-in-word {
+  background-color: #6b7280; /* Gray for not in word */
+}
+
+.letter-tile.empty {
+  background-color: #f3f4f6; /* Light gray for empty */
+  border: 2px solid #d1d5db;
+  color: transparent;
+}
+
+.letter-tile.submitting {
+  background-color: #9ca3af; /* Gray for submitting */
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.ai-response-panel {
+  background-color: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  max-width: 300px;
+  min-width: 250px;
+}
+
+.ai-response-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0369a1;
+  margin-bottom: 0.5rem;
+}
+
+.ai-response-text {
+  color: #1e40af;
+  line-height: 1.5;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 1024px) {
+  .guess-grid-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .ai-response-panel {
+    max-width: none;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .letter-tile {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .letter-tiles {
+    gap: 0.125rem;
+  }
+}
