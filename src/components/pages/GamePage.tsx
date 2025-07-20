@@ -70,7 +70,7 @@ const GamePage: React.FC<GamePageProps> = ({
         </div>
 
         {/* Game Status */}
-        <div className="game-status-section">
+        <div className="game-status-only">
           <div className="game-status-content">
             <div className="game-status-text">
               Game Status:
@@ -87,39 +87,54 @@ const GamePage: React.FC<GamePageProps> = ({
               </span>
             </div>
           </div>
+        </div>
 
+        {/* Lives Display */}
+        <div className="lives-section">
           <LivesDisplay remainingLives={remainingLives} />
         </div>
 
-        {/* Hints Corner */}
-        <HintsCorner
-          hintTypes={gameSession.allHintTypes || []}
-          usedHints={gameSession.hintsInfo?.usedHintDetails || []}
-          onGetHint={onGetHint}
-        />
-
-        {/* Word Input Board */}
-        {!isGameOver && (
-          <WordBoard onSubmitGuess={handleGuessSubmit} disabled={isGameOver} />
-        )}
-
-        {/* Game Over Message */}
-        {isGameOver && (
-          <div
-            className={`game-over-message ${gameSession.gameStatus.toLowerCase()}`}
-          >
-            {gameSession.gameStatus === "WON"
-              ? "🎉 Congratulations! You won!"
-              : "😞 Game over! Better luck next time!"}
+        {/* Main Content Area */}
+        <div className="game-main-content">
+          {/* Hints Corner */}
+          <div className="hints-area">
+            <HintsCorner
+              hintTypes={gameSession.allHintTypes || []}
+              usedHints={gameSession.hintsInfo?.usedHintDetails || []}
+              onGetHint={onGetHint}
+            />
           </div>
-        )}
 
-        {/* Guess Grid with AI Response */}
-        <GuessGrid
-          guesses={boardState}
-          currentAiResponse={currentAiResponse}
-          maxRows={6}
-        />
+          {/* Word Input Board */}
+          <div className="word-area">
+            {!isGameOver && (
+              <WordBoard
+                onSubmitGuess={handleGuessSubmit}
+                disabled={isGameOver}
+              />
+            )}
+
+            {/* Game Over Message */}
+            {isGameOver && (
+              <div
+                className={`game-over-message ${gameSession.gameStatus.toLowerCase()}`}
+              >
+                {gameSession.gameStatus === "WON"
+                  ? "🎉 Congratulations! You won!"
+                  : "😞 Game over! Better luck next time!"}
+              </div>
+            )}
+          </div>
+
+          {/* Guess Grid with AI Response */}
+          <div className="guess-area">
+            <GuessGrid
+              guesses={boardState}
+              currentAiResponse={currentAiResponse}
+              maxRows={6}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
