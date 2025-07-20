@@ -43,7 +43,11 @@ const HintModal: React.FC<HintModalProps> = ({
         </div>
 
         <div className="modal-body">
-          <p>{hintType.displayName || "Hint information"}</p>
+          <p
+            style={{ fontWeight: 500, fontSize: "16px", marginBottom: "12px" }}
+          >
+            {hintType.displayName || "This hint provides extra help!"}
+          </p>
 
           {isUsed && rawHintText && (
             <div className="hint-text">

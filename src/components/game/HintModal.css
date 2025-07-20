@@ -4,73 +4,93 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  animation: fadeIn 0.25s ease-out;
 }
 
 .modal-content {
-  background: white;
-  border-radius: 8px;
+  background: #fff;
+  border-radius: 12px;
   width: 90%;
-  max-width: 500px;
-  max-height: 80vh;
+  max-width: 480px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #eee;
+  padding: 18px 24px;
+  background-color: #f1f3f5;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 20px;
+  font-weight: 600;
+  color: #343a40;
 }
 
 .modal-close {
+  font-size: 24px;
   background: none;
   border: none;
-  font-size: 24px;
+  color: #6c757d;
   cursor: pointer;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.2s ease-in-out;
 }
 
 .modal-close:hover {
-  background-color: #f5f5f5;
-  border-radius: 50%;
+  color: #343a40;
+  transform: scale(1.1);
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 20px 24px;
+  font-size: 16px;
+  color: #495057;
+}
+
+.modal-body p {
+  margin-bottom: 12px;
+}
+
+.hint-text {
+  padding: 16px;
+  border-left: 5px solid #007bff;
+  background-color: #f1f9ff;
+  border-radius: 6px;
+  color: #212529;
+  font-family: "Courier New", monospace;
+  white-space: pre-wrap;
+  margin-top: 12px;
+  line-height: 1.5;
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  padding: 20px;
-  border-top: 1px solid #eee;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #dee2e6;
 }
 
 .btn-primary,
 .btn-secondary {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  border: none;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-primary {
@@ -83,20 +103,45 @@
 }
 
 .btn-secondary {
-  background-color: #6c757d;
+  background-color: #adb5bd;
   color: white;
 }
 
 .btn-secondary:hover {
-  background-color: #545b62;
+  background-color: #868e96;
 }
 
-/* HintModal.css */
-.hint-text {
-  white-space: pre-wrap; /* just in case you go back to <pre> */
-  font-size: 16px;
-  line-height: 1.5;
-  margin-top: 10px;
-  background-color: black;
-  text-emphasis-color: black;
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+    margin: 16px;
+  }
+
+  .modal-body,
+  .modal-footer,
+  .modal-header {
+    padding: 16px;
+  }
 }
