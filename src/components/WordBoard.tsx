@@ -95,6 +95,9 @@ const WordBoard: React.FC<WordBoardProps> = ({
 
   return (
     <div className="word-board">
+      <h3 className="word-board-title">Enter Your Guess</h3>
+      <p className="word-board-subtitle">Type a 5-letter word</p>
+      
       <div className="letter-inputs">
         {letters.map((letter, index) => (
           <input
