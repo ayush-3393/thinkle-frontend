@@ -1,10 +1,13 @@
 import React from "react";
 import { useGameSession } from "../hooks/useGameSession";
 import Navbar from "./NavBar";
+import LivesDisplay from "./LivesDisplay";
 
 const GamePage = () => {
   const { gameSession, isCreatingSession, sessionError, retryCreateSession } =
     useGameSession();
+
+  const { gameStatus, guesses, hintsInfo, remainingLives } = gameSession || {};
 
   // Loading state
   if (isCreatingSession) {
@@ -76,6 +79,9 @@ const GamePage = () => {
       <Navbar title="Thinkle Game" />
       <header className="App-header">
         <h1>Welcome to the Game!</h1>
+        {remainingLives !== undefined && (
+          <LivesDisplay remainingLives={remainingLives} />
+        )}
       </header>
     </div>
   );
