@@ -29,7 +29,7 @@ const AppContent: React.FC = () => {
   const location = useLocation();
   const [gameSession, setGameSession] =
     useState<CreateGameSessionResponse | null>(null);
-  const [remainingLives, setRemainingLives] = useState<number>(10); // Add remainingLives state
+  const [remainingLives, setRemainingLives] = useState<number | null>(null); // Start with null instead of 10
   const [boardState, setBoardState] = useState<BoardGuess[]>([]); // Add board state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,15 +37,26 @@ const AppContent: React.FC = () => {
   // Mock user ID for demo - in real app, get from auth context
   const userId = 1;
 
+  // Debug remainingLives changes
+  useEffect(() => {
+    console.log("remainingLives state changed to:", remainingLives);
+  }, [remainingLives]);
+
   // Refresh session periodically when on game page
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
     if (location.pathname === "/game" && gameSession) {
-      // Refresh session every 30 seconds when on game page
-      intervalId = setInterval(() => {
-        fetchGameSession();
-      }, 30000);
+      // Only refresh if game is still in progress to avoid resetting completed game state
+      if (gameSession.gameStatus === "IN_PROGRESS") {
+        console.log("Setting up periodic refresh for active game");
+        intervalId = setInterval(() => {
+          console.log("Periodic refresh triggered");
+          fetchGameSession();
+        }, 30000);
+      } else {
+        console.log("Game is completed, skipping periodic refresh");
+      }
     }
 
     return () => {
@@ -58,8 +69,13 @@ const AppContent: React.FC = () => {
   const fetchGameSession = async () => {
     try {
       const session = await ApiService.getGameSession(userId);
+      console.log("Fetched game session:", session);
+      console.log("Session remaining lives:", session.remainingLives);
+
       setGameSession(session);
-      setRemainingLives(session.remainingLives || 10); // Update remainingLives from session
+      const livesToSet = session.remainingLives ?? 10;
+      console.log("Setting remaining lives to:", livesToSet);
+      setRemainingLives(livesToSet); // Update remainingLives from session
 
       // Update board state from session
       setBoardState(boardFromSession(session.guesses || []));
@@ -78,8 +94,13 @@ const AppContent: React.FC = () => {
 
     try {
       const session = await ApiService.createGameSession(userId);
+      console.log("Created game session:", session);
+      console.log("New session remaining lives:", session.remainingLives);
+
       setGameSession(session);
-      setRemainingLives(session.remainingLives || 10); // Update remainingLives from new session
+      const livesToSet = session.remainingLives ?? 10;
+      console.log("Setting initial remaining lives to:", livesToSet);
+      setRemainingLives(livesToSet); // Update remainingLives from new session
 
       // Initialize board state from new session
       setBoardState(boardFromSession(session.guesses || []));
@@ -168,6 +189,10 @@ const AppContent: React.FC = () => {
 
       // Update remaining lives if provided
       if (response.remainingLives !== undefined) {
+        console.log(
+          "Updating remaining lives from response:",
+          response.remainingLives
+        );
         setRemainingLives(response.remainingLives);
       }
 
@@ -179,6 +204,7 @@ const AppContent: React.FC = () => {
           gameStatus: response.gameStatus || gameSession.gameStatus,
         };
         console.log("Updating game session:", updatedSession);
+        console.log("Final remaining lives state:", response.remainingLives);
         setGameSession(updatedSession);
       }
     } catch (err) {
@@ -206,6 +232,7 @@ const AppContent: React.FC = () => {
   const handleBackToHome = () => {
     navigate("/home");
     setGameSession(null);
+    setRemainingLives(null); // Reset to null
     setBoardState([]); // Reset board state
     setError(null);
   };
@@ -235,7 +262,7 @@ const AppContent: React.FC = () => {
           gameSession ? (
             <GamePage
               gameSession={gameSession}
-              remainingLives={remainingLives}
+              remainingLives={remainingLives ?? 10}
               boardState={boardState}
               onGetHint={getHint}
               onBackToHome={handleBackToHome}
