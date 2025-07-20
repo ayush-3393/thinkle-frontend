@@ -4,3 +4,8 @@ export interface GuessResponse {
   missedPositions: number[];
   aiResponse: string;
 }
+
+export interface GuessRequest {
+  userId: number;
+  guessedWord: string;
+}
