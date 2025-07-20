@@ -1,6 +1,7 @@
 // pages/HomePage.tsx
 import React from "react";
 import { Play } from "lucide-react";
+import Rules from "../Rules";
 import "./HomePage.css";
 
 interface HomePageProps {
@@ -23,6 +24,8 @@ const HomePage: React.FC<HomePageProps> = ({ onStartGame }) => {
             you solve the puzzle!
           </p>
         </div>
+
+        <Rules />
 
         <button onClick={onStartGame} className="start-game-button">
           <Play className="mr-2" size={20} />
