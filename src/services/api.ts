@@ -12,6 +12,7 @@ import {
   GET_HINT_URL,
   SUBMIT_GUESS_URL,
 } from "../constants/apiUrls";
+import { ApiError } from "../types/apiError";
 
 export class ApiService {
   static async createGameSession(
@@ -27,15 +28,11 @@ export class ApiService {
         body: JSON.stringify(request),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to create game session");
-      }
-
       const result: BaseResponse<CreateGameSessionResponse> =
         await response.json();
 
       if (result.statusCode !== 0) {
-        throw new Error(result.message || "Failed to create game session");
+        throw ApiError.fromApiResponse(result);
       }
 
       return result.data;
@@ -93,14 +90,10 @@ export class ApiService {
         body: JSON.stringify(request),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to get hint");
-      }
-
       const result: BaseResponse<GetHintResponse> = await response.json();
 
       if (result.statusCode !== 0) {
-        throw new Error(result.message || "Failed to get hint");
+        throw ApiError.fromApiResponse(result);
       }
 
       return result.data;
@@ -139,15 +132,11 @@ export class ApiService {
         body: JSON.stringify(request),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch game session");
-      }
-
       const result: BaseResponse<CreateGameSessionResponse> =
         await response.json();
 
       if (result.statusCode !== 0) {
-        throw new Error(result.message || "Failed to fetch game session");
+        throw ApiError.fromApiResponse(result);
       }
 
       return result.data;
@@ -168,14 +157,10 @@ export class ApiService {
         body: JSON.stringify(request),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to submit guess");
-      }
-
       const result: BaseResponse<any> = await response.json();
 
       if (result.statusCode !== 0) {
-        throw new Error(result.message || "Failed to submit guess");
+        throw ApiError.fromApiResponse(result);
       }
 
       console.log("Raw API response for submitGuess:", result.data);

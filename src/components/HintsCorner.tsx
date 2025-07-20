@@ -29,6 +29,12 @@ const HintsCorner: React.FC<HintsCornerProps> = ({
     setLoading(true);
     try {
       await onGetHint(hintTypeString);
+      // Success - keep modal open to show the hint
+    } catch (error) {
+      // On error, close the modal so user can see the error toast
+      console.log("Error caught in HintsCorner, closing modal");
+      handleCloseModal();
+      // Don't re-throw - error is already handled by App component
     } finally {
       setLoading(false);
     }

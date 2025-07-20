@@ -14,6 +14,7 @@ import { ApiService } from "./services/api";
 import LoadingSpinner from "./components/LoadingSpinner";
 import ErrorDisplay from "./components/ErrorDisplay";
 import TEST_CONFIG from "./config/testConfig";
+import { getUserFriendlyError } from "./utils/errorUtils";
 import HomePage from "./components/pages/HomePage";
 import GamePage from "./components/pages/GamePage";
 
@@ -84,7 +85,7 @@ const AppContent: React.FC = () => {
       return session;
     } catch (err) {
       console.error("Error fetching game session:", err);
-      setError("Failed to fetch game session.");
+      setError(getUserFriendlyError(err));
       return null;
     }
   };
@@ -108,7 +109,7 @@ const AppContent: React.FC = () => {
 
       navigate("/game");
     } catch (err) {
-      setError("Failed to create game session. Please try again.");
+      setError(getUserFriendlyError(err));
       console.error("Error creating game session:", err);
     } finally {
       setLoading(false);
@@ -142,8 +143,10 @@ const AppContent: React.FC = () => {
         setGameSession(updatedSession);
       }
     } catch (err) {
-      setError("Failed to get hint. Please try again.");
+      setError(getUserFriendlyError(err));
       console.error("Error getting hint:", err);
+      // Re-throw the error so HintsCorner can handle modal closing
+      throw err;
     }
   };
 
@@ -216,7 +219,7 @@ const AppContent: React.FC = () => {
         console.log("Board state after error rollback:", newState);
         return newState;
       });
-      setError("Failed to submit guess. Please try again.");
+      setError(getUserFriendlyError(err));
       console.error("Error submitting guess:", err);
       throw err; // Re-throw to handle in component
     }
@@ -246,36 +249,37 @@ const AppContent: React.FC = () => {
     return <LoadingSpinner message="Loading game session..." />;
   }
 
-  if (error) {
-    return <ErrorDisplay error={error} onRetry={handleCloseError} />;
-  }
-
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/home" replace />} />
-      <Route
-        path="/home"
-        element={<HomePage onStartGame={handleStartGame} />}
-      />
-      <Route
-        path="/game"
-        element={
-          gameSession ? (
-            <GamePage
-              gameSession={gameSession}
-              remainingLives={remainingLives ?? 10}
-              boardState={boardState}
-              onGetHint={getHint}
-              onBackToHome={handleBackToHome}
-              onRefreshSession={refreshSession}
-              onSubmitGuess={submitGuess}
-            />
-          ) : (
-            <Navigate to="/home" replace />
-          )
-        }
-      />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route
+          path="/home"
+          element={<HomePage onStartGame={handleStartGame} />}
+        />
+        <Route
+          path="/game"
+          element={
+            gameSession ? (
+              <GamePage
+                gameSession={gameSession}
+                remainingLives={remainingLives ?? 10}
+                boardState={boardState}
+                onGetHint={getHint}
+                onBackToHome={handleBackToHome}
+                onRefreshSession={refreshSession}
+                onSubmitGuess={submitGuess}
+              />
+            ) : (
+              <Navigate to="/home" replace />
+            )
+          }
+        />
+      </Routes>
+
+      {/* Show error as overlay toast */}
+      {error && <ErrorDisplay error={error} onRetry={handleCloseError} />}
+    </>
   );
 };
 export default App;
