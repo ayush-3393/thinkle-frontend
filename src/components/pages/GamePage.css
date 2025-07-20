@@ -1,44 +1,79 @@
 /* GamePage.css */
 .game-page {
   min-height: 100vh;
-  background-color: #f3f4f6;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
   padding: 1rem;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.game-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .game-container {
-  max-width: 64rem;
+  max-width: 70rem;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .game-header {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
+  background: rgba(28, 28, 28, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(55, 55, 55, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
   margin-bottom: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.game-header:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
 }
 
 .game-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1f2937;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #ec4899 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .home-button {
   display: flex;
   align-items: center;
-  color: #4b5563;
-  background: none;
-  border: none;
+  color: #e5e5e5;
+  background: rgba(55, 55, 55, 0.5);
+  border: 1px solid rgba(75, 75, 75, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .home-button:hover {
-  color: #1f2937;
+  color: #ffffff;
+  background: rgba(75, 75, 75, 0.7);
+  border-color: rgba(120, 120, 120, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .home-button svg {
@@ -46,11 +81,18 @@
 }
 
 .game-status-section {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  background: rgba(28, 28, 28, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(55, 55, 55, 0.3);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
   margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.game-status-section:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .game-status-content {
@@ -59,46 +101,75 @@
 }
 
 .game-status-text {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #f3f4f6;
   margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .status-in-progress {
   margin-left: 0.5rem;
-  color: #2563eb;
+  color: #3b82f6;
+  text-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
 }
 
 .status-won {
   margin-left: 0.5rem;
-  color: #16a34a;
+  color: #10b981;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
 }
 
 .status-lost {
   margin-left: 0.5rem;
-  color: #dc2626;
+  color: #ef4444;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
 }
 
 .game-over-message {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  background: rgba(28, 28, 28, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 3rem 2rem;
   margin-bottom: 1.5rem;
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
 }
 
 .game-over-message.won {
-  background-color: #f0fdf4;
-  color: #16a34a;
-  border: 2px solid #22c55e;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
 }
 
 .game-over-message.lost {
-  background-color: #fef2f2;
-  color: #dc2626;
-  border: 2px solid #ef4444;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%);
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-title {
+    font-size: 1.5rem;
+  }
+  
+  .game-status-text {
+    font-size: 1.25rem;
+  }
+  
+  .game-header {
+    padding: 1rem;
+  }
+  
+  .game-status-section {
+    padding: 1.5rem;
+  }
 }
