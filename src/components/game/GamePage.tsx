@@ -2,12 +2,23 @@ import React from "react";
 import { useGameSession } from "../hooks/useGameSession";
 import Navbar from "./NavBar";
 import LivesDisplay from "./LivesDisplay";
+import HintsDisplay from "./HintsDisplay";
+import { HintType } from "../../network/types/HintTypeInterfaces";
+import { HintsInfoForSession } from "../../network/types/GameSessionInterfaces";
 
 const GamePage = () => {
   const { gameSession, isCreatingSession, sessionError, retryCreateSession } =
     useGameSession();
 
-  const { gameStatus, guesses, hintsInfo, remainingLives } = gameSession || {};
+  const { gameStatus, guesses, hintsInfo, remainingLives, allHintTypes } =
+    gameSession || {};
+
+  // Optional: Handle hint received callback if you need to update other parts of the game
+  const handleHintReceived = (hintData: any) => {
+    console.log("Hint received:", hintData);
+    // You can update other game state here if needed
+    // For example, update remaining lives if the API returns it
+  };
 
   // Loading state
   if (isCreatingSession) {
@@ -82,6 +93,11 @@ const GamePage = () => {
         {remainingLives !== undefined && (
           <LivesDisplay remainingLives={remainingLives} />
         )}
+        <HintsDisplay
+          allHintTypes={allHintTypes}
+          hintsInfo={hintsInfo}
+          onHintReceived={handleHintReceived}
+        />
       </header>
     </div>
   );
