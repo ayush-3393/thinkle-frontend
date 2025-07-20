@@ -13,6 +13,7 @@ import { boardFromSession, BoardGuess } from "./types/gameBoard";
 import { ApiService } from "./services/api";
 import LoadingSpinner from "./components/LoadingSpinner";
 import ErrorDisplay from "./components/ErrorDisplay";
+import TEST_CONFIG from "./config/testConfig";
 import HomePage from "./components/pages/HomePage";
 import GamePage from "./components/pages/GamePage";
 
@@ -35,7 +36,7 @@ const AppContent: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Mock user ID for demo - in real app, get from auth context
-  const userId = 1;
+  const userId = TEST_CONFIG.DEMO_USER_ID;
 
   // Debug remainingLives changes
   useEffect(() => {
