@@ -1,0 +1,95 @@
+/* HintModal.css */
+.hint-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.hint-modal {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 28rem;
+  width: 100%;
+  margin: 0 1rem;
+}
+
+.hint-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.hint-modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.hint-modal-close {
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.hint-modal-close:hover {
+  color: #374151;
+}
+
+.hint-modal-content {
+  margin-bottom: 1rem;
+}
+
+.hint-label {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.hint-text-container {
+  background-color: #dbeafe;
+  border-left: 4px solid #3b82f6;
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+.hint-text {
+  color: #1f2937;
+  margin: 0;
+}
+
+.hint-get-section {
+  text-align: center;
+}
+
+.hint-get-description {
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.hint-get-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.hint-get-button:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.hint-get-button:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}

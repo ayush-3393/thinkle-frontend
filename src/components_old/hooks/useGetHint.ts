@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useApiCall } from "../../network/hooks/useApiCall";
 import { getHintApiCall } from "../../network/api/HintApiCalls";
 import {
@@ -12,9 +11,8 @@ interface UseGetHintProps {
 }
 
 /**
- * Custom hook for getting hints in the game
- * @param props - Object containing userId
- * @returns Object with hint data, loading state, error, and getHint function
+ * Custom hook for getting hints in the game.
+ * Only triggers when `retryGetHint()` is called.
  */
 export const useGetHint = (props: UseGetHintProps) => {
   const { userId, hintType } = props;
@@ -25,11 +23,6 @@ export const useGetHint = (props: UseGetHintProps) => {
     error,
     execute: executeGetHint,
   } = useApiCall<GetHintRequest, GetHintResponse | null>(getHintApiCall);
-
-  useEffect(() => {
-    executeGetHint({ hintType, userId });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Safe in custom hook
 
   return {
     hintData,

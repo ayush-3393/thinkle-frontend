@@ -1,26 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGameSession } from "../hooks/useGameSession";
 import Navbar from "./NavBar";
 import LivesDisplay from "./LivesDisplay";
 import HintsDisplay from "./HintsDisplay";
 import { HintType } from "../../network/types/HintTypeInterfaces";
-import { HintsInfoForSession } from "../../network/types/GameSessionInterfaces";
+import {
+  HintDetails,
+  HintsInfoForSession,
+} from "../../network/types/GameSessionInterfaces";
+import { GetHintResponse } from "../../network/types/HintsInterfaces";
 
 const GamePage = () => {
   const { gameSession, isCreatingSession, sessionError, retryCreateSession } =
     useGameSession();
 
-  const { gameStatus, guesses, hintsInfo, remainingLives, allHintTypes } =
-    gameSession || {};
+  const {
+    gameStatus,
+    guesses,
+    hintsInfo: initialHintsInfo,
+    remainingLives,
+    allHintTypes,
+  } = gameSession || {};
 
-  // Optional: Handle hint received callback if you need to update other parts of the game
-  const handleHintReceived = (hintData: any) => {
-    console.log("Hint received:", hintData);
-    // You can update other game state here if needed
-    // For example, update remaining lives if the API returns it
+  // ⬇️ Add state for hintsInfo so it updates when new hint is fetched
+  const [hintsInfo, setHintsInfo] = useState<HintsInfoForSession | undefined>(
+    initialHintsInfo
+  );
+
+  // ✅ When a new hint is received, update the hintsInfo state
+  const handleHintReceived = (
+    hintData: GetHintResponse & { hintType: string }
+  ) => {
+    if (!hintData) return;
+
+    const { hintType, hintText } = hintData;
+    const newHint: HintDetails = { hintType, hintText };
+
+    setHintsInfo((prev) => {
+      if (!prev) return { numberOfHintsUsed: 1, usedHintDetails: [newHint] };
+
+      const existingIndex = prev.usedHintDetails.findIndex(
+        (hint) => hint.hintType === hintType
+      );
+
+      let updatedHints: HintDetails[];
+
+      if (existingIndex !== -1) {
+        updatedHints = [...prev.usedHintDetails];
+        updatedHints[existingIndex] = newHint;
+      } else {
+        updatedHints = [...prev.usedHintDetails, newHint];
+      }
+
+      return {
+        numberOfHintsUsed: updatedHints.length,
+        usedHintDetails: updatedHints,
+      };
+    });
   };
 
-  // Loading state
+  // ⏳ Loading state
   if (isCreatingSession) {
     return (
       <div className="App">
@@ -54,7 +93,7 @@ const GamePage = () => {
     );
   }
 
-  // Error state
+  // ❌ Error state
   if (sessionError) {
     return (
       <div className="App">
@@ -84,7 +123,7 @@ const GamePage = () => {
     );
   }
 
-  // Game loaded successfully
+  // ✅ Game loaded
   return (
     <div className="App">
       <Navbar title="Thinkle Game" />

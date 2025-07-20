@@ -4,6 +4,8 @@ import { HintsInfoForSession } from "../../network/types/GameSessionInterfaces";
 import HintModal from "./HintModal";
 import { isHintTypeUsed } from "../helper";
 import "./HintsDisplay.css";
+import { useGetHint } from "../hooks/useGetHint";
+import { GetHintResponse } from "../../network/types/HintsInterfaces";
 
 interface HintsDisplayProps {
   allHintTypes?: HintType[];
@@ -31,8 +33,13 @@ const HintsDisplay: React.FC<HintsDisplayProps> = ({
     setSelectedHintType(null);
   };
 
-  const handleGetHint = (hintType: string) => {
-    console.log("Getting hint for:", hintType);
+  // const { hintData, isLoading, error, retryGetHint } = useGetHint({
+  //   hintType: selectedHintType?.type || "",
+  //   userId: 1,
+  // });
+
+  const handleGetHint = (hintData: GetHintResponse) => {
+    console.log("Getting hint for:", JSON.stringify(hintData));
     // call your API here and optionally call onHintReceived(hintData);
   };
 

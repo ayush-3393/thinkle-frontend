@@ -1,0 +1,78 @@
+/* HintsCorner.css */
+.hints-corner {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.hints-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.hints-icon {
+  color: #eab308;
+  margin-right: 0.5rem;
+}
+
+.hints-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.hints-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .hints-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.hint-button {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 2px solid;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.hint-button-unused {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+  color: #1f2937;
+}
+
+.hint-button-unused:hover {
+  background-color: #f3f4f6;
+}
+
+.hint-button-used {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.hint-button-used:hover {
+  background-color: #dcfce7;
+}
+
+.hint-button-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.hint-button-status {
+  font-size: 0.75rem;
+  color: #16a34a;
+  margin-top: 0.25rem;
+}

@@ -1,0 +1,81 @@
+/* GamePage.css */
+.game-page {
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  padding: 1rem;
+}
+
+.game-container {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.game-header {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.home-button {
+  display: flex;
+  align-items: center;
+  color: #4b5563;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.home-button:hover {
+  color: #1f2937;
+}
+
+.home-button svg {
+  margin-right: 0.5rem;
+}
+
+.game-status-section {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.game-status-content {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.game-status-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.status-in-progress {
+  margin-left: 0.5rem;
+  color: #2563eb;
+}
+
+.status-won {
+  margin-left: 0.5rem;
+  color: #16a34a;
+}
+
+.status-lost {
+  margin-left: 0.5rem;
+  color: #dc2626;
+}
