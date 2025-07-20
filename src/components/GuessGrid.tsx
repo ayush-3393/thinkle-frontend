@@ -79,7 +79,7 @@ const GuessGrid: React.FC<GuessGridProps> = ({
       <div
         className={`ai-response-panel ${!currentAiResponse ? "waiting" : ""}`}
       >
-        <h4 className="ai-response-title">AI Feedback</h4>
+        <h4 className="ai-response-title">AI Oracle</h4>
         {currentAiResponse ? (
           <p className="ai-response-text">{currentAiResponse}</p>
         ) : (

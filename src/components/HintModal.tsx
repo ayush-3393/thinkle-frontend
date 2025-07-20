@@ -1,5 +1,6 @@
 // components/HintModal.tsx
 import React from "react";
+import ReactDOM from "react-dom";
 import { HintType, HintDetails } from "../types/interfaces";
 import { X } from "lucide-react";
 import "./HintModal.css";
@@ -25,7 +26,7 @@ const HintModal: React.FC<HintModalProps> = ({
 
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div className="hint-modal-overlay">
       <div className="hint-modal">
         <div className="hint-modal-header">
@@ -61,6 +62,9 @@ const HintModal: React.FC<HintModalProps> = ({
       </div>
     </div>
   );
+
+  // Render modal using portal to document.body to escape parent constraints
+  return ReactDOM.createPortal(modalContent, document.body);
 };
 
 export default HintModal;
