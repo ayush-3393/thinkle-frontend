@@ -6,30 +6,139 @@ import {
   GetHintRequest,
   GetHintResponse,
   GuessRequest,
+  SignUpRequest,
+  LoginRequest,
+  AuthResponse,
 } from "../types/interfaces";
 import {
   CREATE_GAME_SESSION_URL,
   GET_HINT_URL,
   SUBMIT_GUESS_URL,
+  REGISTER_URL,
+  LOGIN_URL,
 } from "../constants/apiUrls";
 import { ApiError } from "../types/apiError";
 
 export class ApiService {
+  // Token management
+  static getToken(): string | null {
+    return localStorage.getItem("authToken");
+  }
+
+  static setToken(token: string): void {
+    localStorage.setItem("authToken", token);
+  }
+
+  static removeToken(): void {
+    localStorage.removeItem("authToken");
+  }
+
+  static getAuthHeaders(): HeadersInit {
+    const token = this.getToken();
+    console.log("getAuthHeaders called", {
+      token: token ? "present" : "missing",
+    });
+
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+      console.log("Authorization header added");
+    } else {
+      console.log("No token available for Authorization header");
+    }
+
+    return headers;
+  }
+
+  // Authentication methods
+  static async register(signUpRequest: SignUpRequest): Promise<AuthResponse> {
+    try {
+      const response = await fetch(REGISTER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(signUpRequest),
+      });
+
+      const result: BaseResponse<AuthResponse> = await response.json();
+
+      if (result.statusCode !== 0) {
+        throw ApiError.fromApiResponse(result);
+      }
+
+      // Store the token
+      this.setToken(result.data.token);
+
+      return result.data;
+    } catch (error) {
+      console.error("Error registering user:", error);
+      throw error;
+    }
+  }
+
+  static async login(loginRequest: LoginRequest): Promise<AuthResponse> {
+    try {
+      const response = await fetch(LOGIN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginRequest),
+      });
+
+      const result: BaseResponse<AuthResponse> = await response.json();
+
+      console.log("Raw login API result:", JSON.stringify(result, null, 2));
+
+      if (result.statusCode !== 0) {
+        throw ApiError.fromApiResponse(result);
+      }
+
+      // Store the token
+      this.setToken(result.data.token);
+
+      console.log("Login API returning:", result.data);
+      return result.data;
+    } catch (error) {
+      console.error("Error logging in user:", error);
+      throw error;
+    }
+  }
+
+  static logout(): void {
+    this.removeToken();
+  }
+
+  static isAuthenticated(): boolean {
+    const token = this.getToken();
+    return token !== null && token !== "";
+  }
+
   static async createGameSession(
     userId: number
   ): Promise<CreateGameSessionResponse> {
     try {
       const request: CreateGameSessionRequest = { userId };
+      console.log("createGameSession request:", request);
+      console.log("CREATE_GAME_SESSION_URL:", CREATE_GAME_SESSION_URL);
 
       // Uncomment this for real API call
       const response = await fetch(CREATE_GAME_SESSION_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify(request),
       });
 
+      console.log("createGameSession response status:", response.status);
+
       const result: BaseResponse<CreateGameSessionResponse> =
         await response.json();
+
+      console.log("createGameSession result:", result);
 
       if (result.statusCode !== 0) {
         throw ApiError.fromApiResponse(result);
@@ -86,7 +195,7 @@ export class ApiService {
       // Uncomment this for real API call
       const response = await fetch(GET_HINT_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify(request),
       });
 
@@ -128,7 +237,7 @@ export class ApiService {
 
       const response = await fetch(CREATE_GAME_SESSION_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify(request),
       });
 
@@ -153,7 +262,7 @@ export class ApiService {
 
       const response = await fetch(SUBMIT_GUESS_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify(request),
       });
 
