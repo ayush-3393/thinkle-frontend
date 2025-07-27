@@ -13,22 +13,29 @@ import { boardFromSession, BoardGuess } from "./types/gameBoard";
 import { ApiService } from "./services/api";
 import LoadingSpinner from "./components/LoadingSpinner";
 import ErrorDisplay from "./components/ErrorDisplay";
-import TEST_CONFIG from "./config/testConfig";
 import { getUserFriendlyError } from "./utils/errorUtils";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import ErrorBoundary from "./components/ErrorBoundary";
 import HomePage from "./components/pages/HomePage";
 import GamePage from "./components/pages/GamePage";
+import LoginPage from "./components/pages/LoginPage";
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <ErrorBoundary>
+      <AuthProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 };
 
 const AppContent: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const [gameSession, setGameSession] =
     useState<CreateGameSessionResponse | null>(null);
   const [remainingLives, setRemainingLives] = useState<number | null>(null); // Start with null instead of 10
@@ -38,8 +45,8 @@ const AppContent: React.FC = () => {
   const [sessionChecked, setSessionChecked] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-  // Mock user ID for demo - in real app, get from auth context
-  const userId = TEST_CONFIG.DEMO_USER_ID;
+  // Get user ID from authenticated user
+  const userId = user?.id;
 
   // Persist game state to sessionStorage
   useEffect(() => {
@@ -79,7 +86,12 @@ const AppContent: React.FC = () => {
 
   // Check for existing session on mount
   useEffect(() => {
-    if (!sessionChecked && location.pathname === "/game") {
+    if (
+      !sessionChecked &&
+      location.pathname === "/game" &&
+      isAuthenticated &&
+      userId
+    ) {
       setLoading(true);
 
       // First, try to restore from sessionStorage
@@ -119,13 +131,18 @@ const AppContent: React.FC = () => {
       setIsInitialLoad(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, sessionChecked]);
+  }, [location.pathname, sessionChecked, isAuthenticated, userId]);
 
   // Refresh session periodically when on game page
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
-    if (location.pathname === "/game" && gameSession) {
+    if (
+      location.pathname === "/game" &&
+      gameSession &&
+      isAuthenticated &&
+      userId
+    ) {
       // Only refresh if game is still in progress to avoid resetting completed game state
       if (gameSession.gameStatus === "IN_PROGRESS") {
         intervalId = setInterval(() => {
@@ -140,9 +157,14 @@ const AppContent: React.FC = () => {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, gameSession]);
+  }, [location.pathname, gameSession, isAuthenticated, userId]);
 
   const fetchGameSession = async () => {
+    if (!userId) {
+      console.error("No user ID available");
+      return null;
+    }
+
     try {
       const session = await ApiService.getGameSession(userId);
 
@@ -165,11 +187,29 @@ const AppContent: React.FC = () => {
   };
 
   const createGameSession = async () => {
+    console.log("createGameSession called", {
+      userId,
+      user,
+      isAuthenticated,
+      authLoading,
+    });
+
+    if (!isAuthenticated) {
+      setError("Please log in to start a game");
+      return;
+    }
+
+    if (!user || !userId) {
+      setError("User information not available. Please try logging in again.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setIsInitialLoad(false); // Mark that we're no longer in initial load
 
     try {
+      console.log("Calling ApiService.createGameSession with userId:", userId);
       const session = await ApiService.createGameSession(userId);
 
       setGameSession(session);
@@ -189,6 +229,11 @@ const AppContent: React.FC = () => {
   };
 
   const getHint = async (hintType: string) => {
+    if (!userId) {
+      setError("User not authenticated");
+      return;
+    }
+
     try {
       const hintResponse = await ApiService.getHint(userId, hintType);
 
@@ -223,6 +268,11 @@ const AppContent: React.FC = () => {
   };
 
   const submitGuess = async (guessedWord: string) => {
+    if (!userId) {
+      setError("User not authenticated");
+      return;
+    }
+
     try {
       // Add optimistic update - show guess with loading state
       const optimisticGuess: BoardGuess = {
@@ -296,18 +346,36 @@ const AppContent: React.FC = () => {
     setError(null);
   };
 
+  // Show auth loading spinner
+  if (authLoading) {
+    return <LoadingSpinner message="Checking authentication..." />;
+  }
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? <Navigate to="/home" replace /> : <LoginPage />
+          }
+        />
         <Route
           path="/home"
-          element={<HomePage onStartGame={handleStartGame} />}
+          element={
+            isAuthenticated ? (
+              <HomePage onStartGame={handleStartGame} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
         />
         <Route
           path="/game"
           element={
-            !sessionChecked || loading ? (
+            !isAuthenticated ? (
+              <Navigate to="/" replace />
+            ) : !sessionChecked || loading ? (
               <LoadingSpinner message="Loading game session..." />
             ) : gameSession ? (
               <GamePage

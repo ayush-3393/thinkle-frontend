@@ -13,3 +13,7 @@ export const GET_HINT_URL = `${API_BASE_URL}/hints/get`;
 export const CREATE_GAME_SESSION_URL = `${API_BASE_URL}/game/session`;
 
 export const SUBMIT_GUESS_URL = `${API_BASE_URL}/guess/submit`;
+
+// Authentication URLs
+export const REGISTER_URL = `${API_BASE_URL}/api/auth/register`;
+export const LOGIN_URL = `${API_BASE_URL}/api/auth/login`;

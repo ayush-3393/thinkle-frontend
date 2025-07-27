@@ -106,3 +106,27 @@ export interface ReactivateHintTypeResponse {
   type: string;
   displayName: string;
 }
+
+// Authentication interfaces
+export interface SignUpRequest {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface UserInfo {
+  id: number;
+  username: string;
+  email: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  message: string;
+  userInfo: UserInfo;
+}
