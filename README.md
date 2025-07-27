@@ -1,46 +1,30 @@
-# Getting Started with Create React App
+## Backend Repo
+https://github.com/ayush-3393/thinkle-backend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Demo Screenshots
+### The Login Page
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 33 44 PM" src="https://github.com/user-attachments/assets/ff5edd46-953d-4b17-92ce-e087b9661a15" />
 
-## Available Scripts
+### The Signup Page
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 34 30 PM" src="https://github.com/user-attachments/assets/0641faca-3f22-4bec-acb0-1509e4a9d591" />
 
-In the project directory, you can run:
+### The Home Page
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 34 38 PM" src="https://github.com/user-attachments/assets/58d35d45-d2df-4001-bc31-b824ce91f416" />
 
-### `npm start`
+### The Game Page
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 34 49 PM" src="https://github.com/user-attachments/assets/fed84a3c-3536-44ef-9f46-1255fd192903" />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Making A Guess
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 35 02 PM" src="https://github.com/user-attachments/assets/b5d48037-223d-477d-9bcc-8d403785ad40" />
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Accessing Hint
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 35 10 PM" src="https://github.com/user-attachments/assets/7910a6e2-f673-4393-b2c3-7abaa3b753ad" />
 
-### `npm test`
+### Getting Hint
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 35 19 PM" src="https://github.com/user-attachments/assets/e346eb55-c6ee-4bee-b52b-8b9e2bf49ccc" />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Error Accessing More Than 2 Hints (Game Rules: user can only use max 2 hints per game)
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 35 57 PM" src="https://github.com/user-attachments/assets/66831825-bb82-4e94-aba3-c91ed81d2579" />
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Winning The Game
+<img width="1470" height="956" alt="Screenshot 2025-07-27 at 8 36 12 PM" src="https://github.com/user-attachments/assets/d409d985-f15f-4a81-840c-9e8e0fefd64e" />
