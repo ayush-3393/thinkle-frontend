@@ -1,0 +1,123 @@
+.game-rules {
+  margin: 2rem 0;
+}
+
+.rules-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f9fafb;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.rule-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.rule-item:hover {
+  transform: translateY(-2px);
+  background: rgba(17, 24, 39, 0.8);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
+}
+
+.rule-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  border-radius: 8px;
+  color: white;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.rule-item:hover .rule-icon {
+  background: linear-gradient(135deg, #a855f7, #9333ea);
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+}
+
+.rule-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  text-align: left;
+}
+
+.rule-text strong {
+  color: #f9fafb;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.rule-text span {
+  color: #d1d5db;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.3;
+  text-align: left;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .rules-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-width: 100%;
+  }
+  
+  .rules-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .rule-item {
+    padding: 0.875rem;
+    gap: 0.5rem;
+  }
+  
+  .rule-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .rule-icon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .rule-text strong {
+    font-size: 0.8rem;
+  }
+  
+  .rule-text span {
+    font-size: 0.7rem;
+  }
+}

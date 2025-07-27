@@ -22,5 +22,8 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "src/components_old/**/*"
   ]
 }

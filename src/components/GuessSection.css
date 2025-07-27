@@ -1,0 +1,62 @@
+/* GuessSection.css */
+.guesses-section {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.guesses-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.no-guesses {
+  color: #6b7280;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.guesses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.guess-item {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.guess-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.guess-word {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.guess-number {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.guess-details {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.guess-details p {
+  margin: 0.25rem 0;
+}
+
+.guess-details strong {
+  font-weight: 600;
+}

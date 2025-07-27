@@ -1,4 +1,5 @@
 import { GuessResponse } from "./GuessInterfaces";
+import { HintType } from "./HintTypeInterfaces";
 
 export interface CreateGameSessionRequest {
   userId: number;
@@ -9,6 +10,7 @@ export interface CreateGameSessionResponse {
   gameStatus: GameStatus;
   hintsInfo: HintsInfoForSession;
   guesses: GuessResponse[];
+  allHintTypes: HintType[];
 }
 
 export enum GameStatus {
@@ -19,7 +21,7 @@ export enum GameStatus {
 
 export interface HintsInfoForSession {
   numberOfHintsUsed: number;
-  hintDetails: HintDetails[];
+  usedHintDetails: HintDetails[];
 }
 
 export interface HintDetails {

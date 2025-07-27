@@ -1,0 +1,175 @@
+/* LivesDisplay.css */
+.lives-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(55, 55, 55, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(75, 75, 75, 0.3);
+  border-radius: 0.75rem;
+  margin: 1rem 0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.lives-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(239, 68, 68, 0.02), transparent);
+  pointer-events: none;
+}
+
+.lives-display:hover {
+  background: rgba(65, 65, 65, 0.6);
+  border-color: rgba(239, 68, 68, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+}
+
+.lives-label {
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
+}
+
+.lives-hearts {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.heart-alive {
+  font-size: 1.75rem;
+  color: #ef4444;
+  margin: 0 0.25rem;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.05); }
+  50% { transform: scale(1); }
+}
+
+.heart-alive:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.heart-lost {
+  font-size: 1.75rem;
+  color: #6b7280;
+  margin: 0 0.25rem;
+  opacity: 0.3;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.lives-count {
+  margin-left: 1rem;
+  font-size: 1rem;
+  color: #9ca3af;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 640px) {
+  .lives-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    margin: 0.75rem 0;
+    flex-wrap: wrap;
+  }
+  
+  .lives-label {
+    margin-right: 0;
+    font-size: 1rem;
+    order: 1;
+    flex-shrink: 0;
+  }
+  
+  .lives-hearts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.125rem;
+    order: 2;
+    max-width: 100%;
+  }
+  
+  .heart-alive,
+  .heart-lost {
+    font-size: 1.5rem;
+    margin: 0 0.125rem;
+    flex-shrink: 0;
+  }
+  
+  .lives-count {
+    margin-left: 0;
+    font-size: 0.875rem;
+    order: 3;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .lives-display {
+    padding: 0.5rem;
+    gap: 0.25rem;
+  }
+  
+  .lives-label {
+    font-size: 0.875rem;
+  }
+  
+  .heart-alive,
+  .heart-lost {
+    font-size: 1.25rem;
+    margin: 0 0.1rem;
+  }
+  
+  .lives-count {
+    font-size: 0.75rem;
+  }
+  
+  /* Stack vertically on very small screens if too many hearts */
+  .lives-hearts {
+    flex-wrap: wrap;
+    max-width: 200px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 320px) {
+  .lives-display {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .lives-label,
+  .lives-hearts,
+  .lives-count {
+    order: unset;
+  }
+}
