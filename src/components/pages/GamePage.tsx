@@ -62,7 +62,7 @@ const GamePage: React.FC<GamePageProps> = ({
       <div className="game-container">
         {/* Header */}
         <div className="game-header">
-          <h1 className="game-title">Word Quest</h1>
+          <h1 className="game-title">Thinkle!</h1>
           <button onClick={onBackToHome} className="home-button">
             <Home className="mr-2" size={20} />
             Home
