@@ -1,15 +1,19 @@
 // pages/HomePage.tsx
 import React from "react";
-import { Play, LogOut } from "lucide-react";
+import { Play, LogOut, Loader2 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import Rules from "../Rules";
 import "./HomePage.css";
 
 interface HomePageProps {
   onStartGame: () => void;
+  isStartingGame?: boolean;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onStartGame }) => {
+const HomePage: React.FC<HomePageProps> = ({
+  onStartGame,
+  isStartingGame = false,
+}) => {
   const { user, logout } = useAuth();
 
   const handleLogout = () => {
@@ -41,9 +45,22 @@ const HomePage: React.FC<HomePageProps> = ({ onStartGame }) => {
 
         <Rules />
 
-        <button onClick={onStartGame} className="start-game-button">
-          <Play className="mr-2" size={20} />
-          Start Game
+        <button
+          onClick={onStartGame}
+          className="start-game-button"
+          disabled={isStartingGame}
+        >
+          {isStartingGame ? (
+            <>
+              <Loader2 className="mr-2 animate-spin" size={20} />
+              Starting Game...
+            </>
+          ) : (
+            <>
+              <Play className="mr-2" size={20} />
+              Start Game
+            </>
+          )}
         </button>
       </div>
     </div>

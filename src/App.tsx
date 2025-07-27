@@ -16,6 +16,7 @@ import ErrorDisplay from "./components/ErrorDisplay";
 import { getUserFriendlyError } from "./utils/errorUtils";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import ErrorBoundary from "./components/ErrorBoundary";
+import GameLoadingOverlay from "./components/GameLoadingOverlay";
 import HomePage from "./components/pages/HomePage";
 import GamePage from "./components/pages/GamePage";
 import LoginPage from "./components/pages/LoginPage";
@@ -364,7 +365,10 @@ const AppContent: React.FC = () => {
           path="/home"
           element={
             isAuthenticated ? (
-              <HomePage onStartGame={handleStartGame} />
+              <HomePage
+                onStartGame={handleStartGame}
+                isStartingGame={loading}
+              />
             ) : (
               <Navigate to="/" replace />
             )
@@ -396,6 +400,11 @@ const AppContent: React.FC = () => {
 
       {/* Show error as overlay toast */}
       {error && <ErrorDisplay error={error} onRetry={handleCloseError} />}
+
+      {/* Show game loading overlay when creating session */}
+      {loading && location.pathname === "/home" && (
+        <GameLoadingOverlay message="Creating your game session..." />
+      )}
     </>
   );
 };
